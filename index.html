@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="AFD Factory: protótipo didático interativo de um autômato finito determinístico que reconhece palavras binárias terminadas em 01." />
+  <title>AFD Factory | Fábrica de Robôs</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-left" aria-hidden="true"></div>
+  <div class="ambient ambient-right" aria-hidden="true"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="AFD Factory, voltar ao início">
+        <span class="brand-mark" aria-hidden="true"><span class="brand-mark-inner">01</span></span>
+        <span class="brand-wordmark"><strong>AFD<span>FACTORY</span></strong><small>LABORATÓRIO DE AUTÔMATOS</small></span>
+      </a>
+      <nav class="topnav" aria-label="Navegação principal">
+        <a href="#laboratorio">Laboratório</a>
+        <a href="#automato">Autômato</a>
+        <a href="#testes">Testes</a>
+      </nav>
+      <div class="system-indicator"><span class="live-dot"></span><span>SISTEMA OPERACIONAL</span></div>
+    </header>
+
+    <main id="inicio">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> PROJETO DIDÁTICO • LINGUAGENS FORMAIS E AUTÔMATOS</div>
+          <h1 id="hero-title">Uma fábrica.<br /><span>Infinitas sequências.</span><br />Uma regra.</h1>
+          <p>Simule uma linha de produção de robôs em que cada código binário passa por um <strong>Autômato Finito Determinístico</strong>. Só são aprovados os códigos que terminam em <code>01</code>.</p>
+          <a class="hero-cta" href="#laboratorio">INICIAR LABORATÓRIO <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-graphic" aria-hidden="true">
+          <div class="hero-orbit orbit-1"></div><div class="hero-orbit orbit-2"></div>
+          <div class="hero-bot">
+            <div class="hero-bot-antenna"></div>
+            <div class="hero-bot-head"><div class="hero-bot-eye"></div><div class="hero-bot-eye"></div></div>
+            <div class="hero-bot-neck"></div><div class="hero-bot-body"><div class="hero-bot-core">01</div></div>
+            <div class="hero-bot-leg left"></div><div class="hero-bot-leg right"></div>
+          </div>
+          <span class="orbit-label label-one">δ(q₀, 0) = q₁</span>
+          <span class="orbit-label label-two">ACESSO VALIDADO</span>
+          <span class="orbit-label label-three">Σ = {0, 1}</span>
+        </div>
+      </section>
+
+      <section id="laboratorio" class="laboratory" aria-labelledby="lab-title">
+        <div class="section-heading"><div><span class="section-kicker">01 / LINHA DE PRODUÇÃO</span><h2 id="lab-title">Central de operações <span class="h2-accent">/ AFD-01</span></h2></div><span class="section-id">PROTOCOLO DE RECONHECIMENTO</span></div>
+        <div class="work-grid">
+          <section class="panel control-panel" aria-labelledby="control-title">
+            <div class="panel-header"><div><span class="panel-index">MÓDULO 01</span><h3 id="control-title">Enviar robô</h3></div><span class="mini-status"><span></span> PRONTO</span></div>
+            <label for="codeInput" class="input-label">IDENTIFICAÇÃO BINÁRIA</label>
+            <div class="code-field"><span class="field-prefix">BIN_</span><input id="codeInput" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="24" value="1101" aria-describedby="inputHelp inputError" placeholder="Ex.: 1101" /><span class="field-cursor" aria-hidden="true">▌</span></div>
+            <p class="field-help" id="inputHelp">Digite de 1 a 24 símbolos, usando apenas 0 e 1. O código deve terminar em <strong>01</strong>.</p>
+            <p class="error-message" id="inputError" role="alert" hidden></p>
+            <div class="preset-heading">TESTES RÁPIDOS</div>
+            <div class="preset-grid" role="group" aria-label="Exemplos de códigos">
+              <button type="button" class="preset" data-code="01">01 <span>✓</span></button>
+              <button type="button" class="preset" data-code="101">101 <span>✓</span></button>
+              <button type="button" class="preset" data-code="1101">1101 <span>✓</span></button>
+              <button type="button" class="preset" data-code="1010">1010 <span>×</span></button>
+              <button type="button" class="preset" data-code="100">100 <span>×</span></button>
+              <button type="button" class="preset" data-code="00001">00001 <span>✓</span></button>
+            </div>
+            <div class="speed-row"><label for="speedSelect">Velocidade da simulação</label><select id="speedSelect" aria-label="Velocidade"><option value="1050">Lenta</option><option value="650" selected>Normal</option><option value="300">Rápida</option></select></div>
+            <div class="action-stack">
+              <button type="button" class="btn btn-primary" id="autoBtn"><span aria-hidden="true">▶</span> EXECUTAR PRODUÇÃO</button>
+              <div class="action-pair"><button type="button" class="btn btn-secondary" id="stepBtn"><span aria-hidden="true">→</span> PASSO A PASSO</button><button type="button" class="btn btn-secondary" id="resetBtn"><span aria-hidden="true">↺</span> REINICIAR</button></div>
+            </div>
+            <p class="control-note">Dica: use <b>Passo a passo</b> para explicar cada transição ao professor.</p>
+          </section>
+
+          <section class="panel factory-panel" aria-labelledby="factory-title">
+            <div class="panel-header"><div><span class="panel-index">MÓDULO 02</span><h3 id="factory-title">Linha de montagem</h3></div><span class="factory-live"><span></span> LIVE FEED</span></div>
+            <div class="factory-stage" id="factoryStage" data-result="idle">
+              <div class="stage-grid" aria-hidden="true"></div>
+              <div class="stage-top-label"><span>SETOR A-01</span><span>ESTAÇÃO DE INSPEÇÃO</span></div>
+              <div class="robot-arm arm-left" aria-hidden="true"><div class="arm-mount"></div><div class="arm-segment first"></div><div class="arm-joint"></div><div class="arm-segment second"></div><div class="arm-claw"></div></div>
+              <div class="robot-arm arm-right" aria-hidden="true"><div class="arm-mount"></div><div class="arm-segment first"></div><div class="arm-joint"></div><div class="arm-segment second"></div><div class="arm-claw"></div></div>
+              <div class="scanner" aria-hidden="true"><span class="scanner-top"></span><span class="scanner-light"></span><span class="scanner-base"></span><span class="scanner-text">SCAN</span></div>
+              <div class="gate-result" id="gateResult" aria-hidden="true"><span class="gate-icon">?</span><span class="gate-label">AGUARDANDO</span></div>
+              <div class="robot-carriage" id="robotCarriage" aria-label="Robô na esteira">
+                <div class="factory-bot"><div class="bot-antenna"></div><div class="bot-head"><span class="bot-eye"></span><span class="bot-eye"></span></div><div class="bot-neck"></div><div class="bot-body"><div class="bot-screen" id="botScreen">1101</div></div><div class="bot-legs"><i></i><i></i></div></div>
+              </div>
+              <div class="conveyor" aria-hidden="true"><div class="conveyor-belt"></div><div class="conveyor-side"></div><div class="conveyor-support one"></div><div class="conveyor-support two"></div></div>
+              <div class="stage-bottom-label"><span>ESTAÇÃO DE ENTRADA</span><span id="stageBottomRight">AGUARDANDO CÓDIGO</span></div>
+            </div>
+            <div class="factory-readout"><div><span class="readout-label">STATUS DA PRODUÇÃO</span><strong id="productionStatus" aria-live="polite">PRONTO PARA INICIAR</strong></div><span id="statusTag" class="status-tag idle">EM ESPERA</span></div>
+            <div class="sequence-box"><div class="sequence-header"><span>LEITURA DA CADEIA</span><span id="stepCount">0 / 4 símbolos</span></div><div class="sequence-chips" id="sequenceChips" aria-label="Símbolos da cadeia"></div></div>
+            <div class="flow-footer"><span><span class="legend-dot cyan"></span> EM PROCESSAMENTO</span><span><span class="legend-dot green"></span> APROVADO</span><span><span class="legend-dot red"></span> REJEITADO</span></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="automato" class="automaton-section" aria-labelledby="afd-title">
+        <div class="section-heading"><div><span class="section-kicker">02 / MOTOR LÓGICO</span><h2 id="afd-title">Por trás da fábrica <span class="h2-accent">/ O autômato</span></h2></div><span class="section-id">M = (Q, Σ, δ, q₀, F)</span></div>
+        <div class="logic-grid">
+          <section class="panel diagram-panel" aria-labelledby="diagram-title">
+            <div class="panel-header"><div><span class="panel-index">VISUALIZAÇÃO EM TEMPO REAL</span><h3 id="diagram-title">Mapa de estados</h3></div><span class="mini-status"><span></span> DETERMINÍSTICO</span></div>
+            <div class="diagram-scroll"><svg id="afdDiagram" class="afd-diagram" viewBox="0 0 700 340" role="img" aria-label="Diagrama do autômato com três estados: q0 inicial, q1 após leitura de zero e q2 final quando a palavra termina em 01">
+              <defs><marker id="arrowEnd" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M1 1 L8 4.5 L1 8" fill="none" stroke="currentColor" stroke-width="1.7"/></marker></defs>
+              <g class="edge" data-from="0" data-symbol="0"><path d="M193 173 L298 173"/><text x="245" y="159">0</text></g>
+              <g class="edge" data-from="1" data-symbol="1"><path d="M401 173 L510 173"/><text x="456" y="159">1</text></g>
+              <g class="edge" data-from="0" data-symbol="1"><path d="M118 135 C73 48 214 47 169 134"/><text x="144" y="70">1</text></g>
+              <g class="edge" data-from="1" data-symbol="0"><path d="M323 135 C280 48 420 47 378 134"/><text x="350" y="70">0</text></g>
+              <g class="edge" data-from="2" data-symbol="0"><path d="M521 214 C473 278 424 279 390 212"/><text x="455" y="279">0</text></g>
+              <g class="edge" data-from="2" data-symbol="1"><path d="M535 222 C475 327 243 324 177 213"/><text x="350" y="324">1</text></g>
+              <path class="initial-arrow" d="M25 174 L92 174"/>
+              <g class="node active" id="state0" transform="translate(145 173)"><circle r="48"/><text y="8">q₀</text></g>
+              <g class="node" id="state1" transform="translate(350 173)"><circle r="48"/><text y="8">q₁</text></g>
+              <g class="node accept" id="state2" transform="translate(560 173)"><circle r="48"/><circle class="inner-ring" r="40"/><text y="8">q₂</text></g>
+            </svg></div>
+            <div class="state-caption"><div><span>ESTADO ATUAL</span><strong id="currentState">q₀</strong></div><div><span>ÚLTIMA TRANSIÇÃO</span><strong id="lastTransition">—</strong></div><div><span>RESULTADO</span><strong id="finalStateResult">AGUARDANDO</strong></div></div>
+          </section>
+          <section class="panel table-panel" aria-labelledby="table-title">
+            <div class="panel-header"><div><span class="panel-index">DEFINIÇÃO FORMAL</span><h3 id="table-title">Tabela de transições</h3></div></div>
+            <p class="table-intro">Linguagem: <code>L = { w ∈ {0,1}* | w termina em 01 }</code></p>
+            <table class="transition-table"><thead><tr><th>ESTADO</th><th>ENTRADA 0</th><th>ENTRADA 1</th></tr></thead><tbody><tr id="tr0"><th>→ q₀</th><td>q₁</td><td>q₀</td></tr><tr id="tr1"><th>q₁</th><td>q₁</td><td>q₂</td></tr><tr id="tr2"><th>★ q₂</th><td>q₁</td><td>q₀</td></tr></tbody></table>
+            <div class="table-note"><span class="info-icon">i</span><p>O estado <b>q₂</b> é final. A aprovação só ocorre se a leitura <b>terminar</b> nele. Atingir q₂ antes de consumir todos os símbolos não garante aceitação.</p></div>
+            <div class="formal-chips"><span>Q = {q₀, q₁, q₂}</span><span>Σ = {0, 1}</span><span>F = {q₂}</span></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="testes" class="test-section" aria-labelledby="test-title">
+        <div class="section-heading"><div><span class="section-kicker">03 / CONTROLE DE QUALIDADE</span><h2 id="test-title">Painel de desempenho <span class="h2-accent">/ QA</span></h2></div><span class="section-id">RESULTADOS DA SESSÃO</span></div>
+        <div class="metrics-grid"><div class="metric"><span>ROBÔS INSPECIONADOS</span><strong id="metricTotal">00</strong><small>Total de cadeias processadas</small></div><div class="metric"><span>APROVADOS</span><strong id="metricAccepted" class="green-text">00</strong><small>Terminam com 01</small></div><div class="metric"><span>REJEITADOS</span><strong id="metricRejected" class="red-text">00</strong><small>Não terminam com 01</small></div><div class="metric"><span>TAXA DE APROVAÇÃO</span><strong id="metricRate">0%</strong><div class="metric-bar"><span id="rateBar"></span></div></div></div>
+        <div class="test-grid">
+          <section class="panel batch-panel" aria-labelledby="batch-title"><div class="panel-header"><div><span class="panel-index">BATERIA DE TESTES</span><h3 id="batch-title">Teste automático</h3></div></div><p>Execute os exemplos do enunciado e confira se a fábrica classifica corretamente cada código. O painel registra todos os resultados.</p><div class="test-groups"><div><span class="test-group-title green-text">CADEIAS QUE DEVEM SER ACEITAS</span><div class="test-pills"><span>01</span><span>101</span><span>001</span><span>1101</span><span>00001</span></div></div><div><span class="test-group-title red-text">CADEIAS QUE DEVEM SER REJEITADAS</span><div class="test-pills"><span>0</span><span>1</span><span>10</span><span>11</span><span>100</span></div></div></div><button class="btn btn-primary" id="batchBtn" type="button">▶ EXECUTAR 10 TESTES</button><p id="batchInfo" class="batch-info" aria-live="polite">Pronto para testar os 10 exemplos.</p></section>
+          <section class="panel history-panel" aria-labelledby="history-title"><div class="panel-header"><div><span class="panel-index">RASTREABILIDADE</span><h3 id="history-title">Histórico de inspeções</h3></div><button type="button" class="text-button" id="clearHistoryBtn">LIMPAR</button></div><div class="history-scroll"><table class="history-table"><thead><tr><th>ROBÔ</th><th>CÓDIGO</th><th>PERCURSO</th><th>RESULTADO</th></tr></thead><tbody id="historyBody"><tr class="history-empty"><td colspan="4">Nenhuma inspeção registrada ainda.</td></tr></tbody></table></div><div class="history-foot"><span>Registros apenas durante esta sessão</span><button type="button" class="text-button" id="exportBtn">↓ EXPORTAR CSV</button></div></section>
+        </div>
+      </section>
+      <section class="explain-panel"><div class="explain-heading"><span class="section-kicker">COMO APRESENTAR AO PROFESSOR</span><h2>O que a fábrica realmente demonstra?</h2></div><div class="explain-items"><div><span class="explain-number">01</span><strong>Entrada</strong><p>O código do robô é uma palavra formada pelo alfabeto Σ = {0,1}.</p></div><div><span class="explain-number">02</span><strong>Processamento</strong><p>O AFD lê um símbolo por vez e muda de estado seguindo a função de transição δ.</p></div><div><span class="explain-number">03</span><strong>Decisão</strong><p>Depois de consumir todos os símbolos, o robô só é aprovado se o estado atual for q₂.</p></div></div></section>
+    </main>
+    <footer class="footer"><span><strong>AFD FACTORY</strong> / FÁBRICA DE ROBÔS</span><span>PROTÓTIPO DIDÁTICO • CIÊNCIA DA COMPUTAÇÃO</span><span>BRAZ CUBAS • LFA</span></footer>
+  </div>
+</body>
+</html>
